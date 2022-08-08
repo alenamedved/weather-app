@@ -10,6 +10,7 @@ import {
   Grid,
   Tooltip,
   IconButton,
+  Typography,
 } from "@mui/material";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from './theme';
@@ -213,6 +214,8 @@ console.log(theme, 'theme')
                         }
                         InputProps={{
                           endAdornment: (
+                            <>
+                            <Typography>°N</Typography>
                             <Button
                               name="videoUrlPreview"
                               style={{ maxWidth: "40px", minWidth: "40px" }}
@@ -223,6 +226,7 @@ console.log(theme, 'theme')
                             >
                               <ClearIcon />
                             </Button>
+                            </>
                           ),
                         }}
                       />
