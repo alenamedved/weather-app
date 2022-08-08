@@ -1,14 +1,14 @@
 # Weather App
 It is a weather-forecasting application that takes geographic US latitude/longitude values as input and presents the weather from a point in time at the given location(s)
 
-The weather data retrieved from [https://api.weather.gov](https://api.weather.gov)
+The weather data retrieved from [https://api.weather.gov] (https://api.weather.gov)
 
 Built with React, JavaScript, MUI.
 
 
 ## Project Screen Shot(s)
 Example of successfull request
-![Seven days forecast will be displayed](https://postimg.cc/XZXhfwTq)
+![Seven days forecast will be displayed](https://i.postimg.cc/VNF8cggq/printscr.png)
 
 ## Installation and Setup Instructions
 To run this project on you local mashin you will need Terminal, Git version control ans Node.js, a programming environment powered by JavaScript. 
