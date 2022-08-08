@@ -29,13 +29,23 @@ Builds the app for production to the `build` folder.\
 
 ## Usage
 The application accepts two imputs from the user: one for latitude another one for longitude.
-Latitude should be in the range of-90-90.
-Longitude should be in the range of-180-180.
-Applicaton won't accept the other range and will throw an notification.
+
+Latitude should be in the range of [-90, 90].
+
+Longitude should be in the range of [-180, 180].
+
+Application won't accept the other range and will throw an notification.
+
 To send a request to the https://api.weather.gov used a  /points endpoint to retrieve the exact grid endpoint by coordinates
+
 https://api.weather.gov/points/{latitude},{longitude}
+
 For example: https://api.weather.gov/points/39.7456,-97.0892
-This will return the grid endpoint in the "forecast" property. This endpoint also tells the application where to find information for issuing office, observation stations, and zones.
+
+This will return the grid endpoint in the "forecast" property. 
+
+For example: https://api.weather.gov/gridpoints/TOP/31,80/forecast
+
 In case if no data was retrived or an error happend the user will recieve an notification with error message.
 
 ## Reflection
@@ -43,5 +53,5 @@ This was a two day project practicing in React, working with API and MUI for sty
 
 Originally I wanted to build an application that allowed users to pull data from the [Weather API](https://api.weather.gov) based on latitude and longitude. I started this process by using the create-react-app boilerplate, then adding axios for sending requests, MUI library for styling.
 
-At the end of the day, the technologies implemented in this project are React, JavaScript, JSX, and MUI. I chose to use the create-react-app boilerplate to minimize initial setup and invest more time working on functionality. In the next iteration I plan to continue to work more on styling to make the app more attractive for potential users.
+At the end of the day, the technologies implemented in this project are React, JavaScript, JSX, and MUI. Also used "react-hot-toast" for notifications. I chose to use the create-react-app boilerplate to minimize initial setup and invest more time working on functionality. In the next iteration I plan to continue to work more on styling to make the app more attractive for potential users.
 
