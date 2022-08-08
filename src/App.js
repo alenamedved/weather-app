@@ -21,14 +21,18 @@ import toast, { Toaster } from "react-hot-toast";
 import { inputValidation } from "./utils/utils";
 import { Typography } from "@mui/material";
 
+//base url that accepted by weather.gov API
 const weatherGovBaseUrl = "https://api.weather.gov/";
+//will be useing points to send request
 const pointsPath = "points/";
 
+//pattern for Regex to validate user's input
 const latValidationPattern = "^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)$"; // [-90,90]
 const longValidationPattern =
   "^[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$"; // [-180.0000,180.0000]
 
 //to return a label describing a direction for long and lat
+//accepts an input as a string and input name to define from wich input data came
 const directionLabel = (str, strName) => {
   switch (strName) {
     case "latitude":
@@ -59,8 +63,10 @@ function App() {
   });
   const [location, setLocation] = useState("");
 
+  //build a url to send a request
   const weatherUrl = weatherGovBaseUrl.concat(pointsPath, `${lat},${long}`);
 
+  
   const inputsData = [
     {
       name: "latitude",
@@ -81,6 +87,7 @@ function App() {
       clearInput: () => setLong(""),
     },
   ];
+
 
   function handleErrorResponse(error) {
     toast.error(`${error.message}. Details:${error.response.data.detail}`);
@@ -145,7 +152,8 @@ function App() {
         console.log(error, "error receiving a link, the first request");
       });
   };
-
+  
+  //get a current location from browser, will require a permission
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       setLat(position.coords.latitude);
@@ -156,7 +164,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <Toaster />
+        <Toaster /> {/* a pop up notification to be displayed */}
         <main>
           <Container
             maxWidth="sm"
