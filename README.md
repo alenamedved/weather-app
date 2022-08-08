@@ -8,7 +8,7 @@ Built with React, JavaScript, MUI.
 
 ## Project Screen Shot(s)
 Example of successfull request
-![Seved days forecast will be displayed](<img width="340" alt="printscr" src="https://user-images.githubusercontent.com/83471057/183330968-45d525e3-178f-4407-af94-7aa37f86187c.png">)![Seved days forecast will be displayed]https://i.postimg.cc/VNF8cggq/printscr.png)
+![Seved days forecast will be displayed](https://i.postimg.cc/VNF8cggq/printscr.png)
 
 ## Installation and Setup Instructions
 To run this project on you local mashin you will need Terminal, Git version control ans Node.js, a programming environment powered by JavaScript. 
