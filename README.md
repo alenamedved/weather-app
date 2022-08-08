@@ -8,7 +8,7 @@ Built with React, JavaScript, MUI.
 
 ## Project Screen Shot(s)
 Example of successfull request
-![Seven days forecast will be displayed](https://i.postimg.cc/VNF8cggq/printscr.png)
+![Seven days forecast will be displayed](https://i.postimg.cc/52X1VnMC/printscr.png)
 
 ## Installation and Setup Instructions
 To run this project on you local mashin you will need Terminal, Git version control ans Node.js, a programming environment powered by JavaScript. 
@@ -28,13 +28,17 @@ To build the app
 Builds the app for production to the `build` folder.\
 
 ## Usage
-The application accepts two imputs from the user: one for latitude another one for longitude.
+The application accepts two inputs from the user in decimal degrees: one for latitude another one for longitude.
 
-Latitude should be in the range of [-90, 90].
+Latitude should be in the range of [-90.0000°, 90.0000°].
 
-Longitude should be in the range of [-180, 180].
+Longitude should be in the range of [-180.0000°, 180.0000°].
 
 Application won't accept the other range and will throw an notification.
+
+Application will accept more the four numbers after period, however the API consider only four numbers after period other numbers will be truncated.
+
+User has an option to use own location, when click the 'get your current coordinates' icon latitude and longitude inputs will be fulfilled with current coordinates, browser will ask for permission to use access location.
 
 To send a request to the https://api.weather.gov used a  /points endpoint to retrieve the exact grid endpoint by coordinates
 
@@ -49,7 +53,7 @@ For example: https://api.weather.gov/gridpoints/TOP/31,80/forecast
 In case if no data was retrived or an error happend the user will recieve an notification with error message.
 
 ## Reflection
-This was a two day project practicing in React, working with API and MUI for styling.
+This was project practicing in React, working with API and MUI for styling.
 
 Originally I wanted to build an application that allowed users to pull data from the [Weather API](https://api.weather.gov) based on latitude and longitude. I started this process by using the create-react-app boilerplate, then adding axios for sending requests, MUI library for styling.
 

@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button"
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper"
+import Grid from '@mui/material/Grid'
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
 
-import {
-  Button,
-  Container,
-  Paper,
-  Grid,
-  Tooltip,
-  IconButton,
-  Typography,
-} from "@mui/material";
-import { ThemeProvider } from "@material-ui/core/styles";
-import theme from './theme';
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./theme/theme";
 
 import ClearIcon from "@mui/icons-material/Clear";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
@@ -23,25 +20,24 @@ import toast, { Toaster } from "react-hot-toast";
 
 import { inputValidation } from "./utils/utils";
 
+const weatherGovBaseUrl = "https://api.weather.gov/";
+const pointsPath = "points/";
 
+const latValidationPattern = "^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)$"; // [-90,90]
+const longValidationPattern =
+  "^[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$"; // [-180.0000,180.0000]
 
 function App() {
   const [lat, setLat] = useState("");
   const [long, setLong] = useState("");
-console.log(theme, 'theme')
+
   const [weatherReport, setWeatherReport] = useState({
     weather: [],
     loading: false,
   });
   const [location, setLocation] = useState("");
 
-  const weatherGovBaseUrl = "https://api.weather.gov/";
-  const pointsPath = "points/";
   const weatherUrl = weatherGovBaseUrl.concat(pointsPath, `${lat},${long}`);
-
-  const latValidationPattern = "^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)$"; // [-90,90]
-  const longValidationPattern =
-    "^[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$"; // [-180,180]
 
   const inputsData = [
     {
@@ -73,7 +69,7 @@ console.log(theme, 'theme')
     });
   }
   //set the values of lat and long
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     switch (name) {
       case "latitude":
@@ -94,8 +90,6 @@ console.log(theme, 'theme')
     await axios
       .get(weatherUrl)
       .then((result) => {
-        console.log(result, "result");
-
         setLocation({
           city: result.data.properties.relativeLocation.properties.city,
           state: result.data.properties.relativeLocation.properties.state,
@@ -113,7 +107,7 @@ console.log(theme, 'theme')
               });
             })
             .catch((error) => {
-             handleErrorResponse(error)
+              handleErrorResponse(error);
               // setLocation("");
               console.log(error, "error fetching the weather");
             });
@@ -126,16 +120,12 @@ console.log(theme, 'theme')
         }
       })
       .catch((error) => {
-       
         handleErrorResponse(error);
         setLocation("");
 
         console.log(error, "error receiving a link");
-
-        
       });
 
-    console.log(lat, "lat", long, "long");
     setLat(""); //reset the values
     setLong(""); //reset the values
   };
@@ -147,10 +137,8 @@ console.log(theme, 'theme')
     });
   };
 
-  console.log(weatherReport, "weather");
-  console.log(location, "location");
   return (
-  <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <div className="App">
         <Toaster />
         <main>
@@ -163,17 +151,15 @@ console.log(theme, 'theme')
           >
             <Paper
               elevation={15}
-              // maxWidth="sm"
               sx={{ backgroundColor: "#B7BFCC" }}
             >
-              {/* {weatherReport.error && <div>{weatherReport.error}</div>} */}
               <Grid container direction="row">
                 <Tooltip
                   title="Get your current coordinates"
                   placement="left-end"
                   sx={{ ml: "auto" }}
                 >
-                  <IconButton onClick={getCurrentLocation} color="success">
+                  <IconButton onClick={getCurrentLocation} color="info">
                     <MyLocationIcon />
                   </IconButton>
                 </Tooltip>
@@ -183,7 +169,6 @@ console.log(theme, 'theme')
                   style={{ textAlign: "center" }}
                   onSubmit={(e) => handleSubmitForm(e)}
                 >
-                {/* <Grid container> */}
                   {inputsData.map((input) => {
                     return (
                       <TextField
@@ -204,7 +189,7 @@ console.log(theme, 'theme')
                         autoFocus={input.name === "latitude"}
                         InputLabelProps={{ shrink: true }}
                         value={input.value}
-                        onChange={(e) => handleChange(e)}
+                        onChange={(e) => handleInputChange(e)}
                         error={
                           !inputValidation(input.validPattern, input.value)
                         }
@@ -214,8 +199,6 @@ console.log(theme, 'theme')
                         }
                         InputProps={{
                           endAdornment: (
-                            <>
-                            <Typography>°N</Typography>
                             <Button
                               name="videoUrlPreview"
                               style={{ maxWidth: "40px", minWidth: "40px" }}
@@ -226,19 +209,18 @@ console.log(theme, 'theme')
                             >
                               <ClearIcon />
                             </Button>
-                            </>
                           ),
                         }}
                       />
                     );
                   })}
-{/* // </Grid> */}
+
                   <Button
                     aria-label="submit button"
                     type="submit"
                     size="large"
                     variant="contained"
-                    sx={{ mt: "1rem", width: '60%'}}
+                    sx={{ mt: "1rem", width: "60%" }}
                   >
                     Get Weather
                   </Button>
@@ -246,7 +228,7 @@ console.log(theme, 'theme')
               </Grid>
 
               <DisplayForecast
-                weather={weatherReport.weather}
+                weatherReport={weatherReport}
                 location={location}
               />
 
@@ -255,7 +237,7 @@ console.log(theme, 'theme')
           </Container>
         </main>
       </div>
-      </ThemeProvider>
+    </ThemeProvider>
   );
 }
 
