@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import "./App.css";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button"
+import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper"
-import Grid from '@mui/material/Grid'
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 
@@ -19,6 +19,7 @@ import DisplayForecast from "./components/DisplayForecast";
 import toast, { Toaster } from "react-hot-toast";
 
 import { inputValidation } from "./utils/utils";
+import { Typography } from "@mui/material";
 
 const weatherGovBaseUrl = "https://api.weather.gov/";
 const pointsPath = "points/";
@@ -26,6 +27,27 @@ const pointsPath = "points/";
 const latValidationPattern = "^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)$"; // [-90,90]
 const longValidationPattern =
   "^[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$"; // [-180.0000,180.0000]
+
+//to return a label describing a direction for long and lat
+const directionLabel = (str, strName) => {
+  switch (strName) {
+    case "latitude":
+      if (Number(str) >= 0) {
+        return <Typography>°N</Typography>;
+      } else if (Number(str) < 0) {
+        return <Typography>°S</Typography>;
+      }
+      break;
+    case "longitude":
+      if (Number(str) <= 0) {
+        return <Typography>°W</Typography>;
+      } else {
+        return <Typography>°E</Typography>;
+      }
+    default:
+      break;
+  }
+};
 
 function App() {
   const [lat, setLat] = useState("");
@@ -109,25 +131,19 @@ function App() {
             .catch((error) => {
               handleErrorResponse(error);
               // setLocation("");
-              console.log(error, "error fetching the weather");
+              console.log(error, "error fetching the weather, second request");
             });
         } else {
-          /* if (result.data.title === "Not Found") */
-
           toast.error("Sorry, forecast for provided location doesn't exist.");
           setWeatherReport({ ...weatherReport, weather: [], loading: false });
-          // setLocation("");
         }
       })
       .catch((error) => {
         handleErrorResponse(error);
         setLocation("");
 
-        console.log(error, "error receiving a link");
+        console.log(error, "error receiving a link, the first request");
       });
-
-    setLat(""); //reset the values
-    setLong(""); //reset the values
   };
 
   const getCurrentLocation = () => {
@@ -149,10 +165,7 @@ function App() {
               pb: 6,
             }}
           >
-            <Paper
-              elevation={15}
-              sx={{ backgroundColor: "#B7BFCC" }}
-            >
+            <Paper elevation={15} sx={{ backgroundColor: "#B7BFCC" }}>
               <Grid container direction="row">
                 <Tooltip
                   title="Get your current coordinates"
@@ -199,16 +212,19 @@ function App() {
                         }
                         InputProps={{
                           endAdornment: (
-                            <Button
-                              name="videoUrlPreview"
-                              style={{ maxWidth: "40px", minWidth: "40px" }}
-                              onClick={input.clearInput}
-                              size="xsmall"
-                              variant="text"
-                              color="primary"
-                            >
-                              <ClearIcon />
-                            </Button>
+                            <>
+                              {directionLabel(input.value, input.name)}
+                              <Button
+                                name="videoUrlPreview"
+                                style={{ maxWidth: "40px", minWidth: "40px" }}
+                                onClick={input.clearInput}
+                                size="xsmall"
+                                variant="text"
+                                color="primary"
+                              >
+                                <ClearIcon />
+                              </Button>
+                            </>
                           ),
                         }}
                       />
