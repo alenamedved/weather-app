@@ -1,7 +1,7 @@
 # Weather App
 It is a weather-forecasting application that takes geographic US latitude/longitude values as input and presents the weather from a point in time at the given location(s)
 
-The weather data retrieved from [https://api.weather.gov] (https://api.weather.gov)
+The weather data retrieved from [https://api.weather.gov](https://api.weather.gov)
 
 Built with React, JavaScript, MUI.
 
