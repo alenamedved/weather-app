@@ -9,4 +9,10 @@ const inputValidation = (pattern, value) => {
 };
 
 
-export { inputValidation };
+const formateDate = (str) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const date = new Date(str)
+  return date.toLocaleDateString("en-US", options)
+}
+
+export { inputValidation, formateDate };

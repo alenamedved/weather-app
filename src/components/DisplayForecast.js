@@ -19,11 +19,11 @@ const DisplayForecast = ({ weather, location }) => {
       >
         {location.city} {location.state}
       </Typography>
-      <Grid container spacing={4} direction="column">
+      {/* <Grid container spacing={4} direction="column"> */}
         {weather?.map((item) => (
           <ForecastCard key={item.number} item={item} />
         ))}
-      </Grid>
+      {/* </Grid> */}
     </Container>
   );
 };
